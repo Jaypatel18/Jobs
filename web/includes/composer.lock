@@ -1,0 +1,84 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "85bbb74dfbc2ba7b4246f08996e9c66d",
+    "packages": [
+        {
+            "name": "phpclasses/httpclient",
+            "version": "1.0.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://www.phpclasses.org/install/package/httpclient.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "phpclasses/sasl": ">=1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "http.php",
+                    "yahoo_user.php"
+                ]
+            }
+        },
+        {
+            "name": "phpclasses/oauth-api",
+            "version": "1.0.103",
+            "dist": {
+                "type": "zip",
+                "url": "https://www.phpclasses.org/install/package/oauth-api.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "phpclasses/httpclient": "1.0.5"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "oauth_client.php",
+                    "mysqli_oauth_client.php",
+                    "mysqli_offline_access_to_google.php",
+                    "database_oauth_client.php",
+                    "cookie_oauth_client.php",
+                    "file_oauth_client.php"
+                ]
+            }
+        },
+        {
+            "name": "phpclasses/sasl",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://www.phpclasses.org/install/package/sasl.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "sasl.php",
+                    "plain_sasl_client.php",
+                    "login_sasl_client.php",
+                    "cram_md5_sasl_client.php",
+                    "ntlm_sasl_client.php",
+                    "basic_sasl_client.php",
+                    "digest_sasl_client.php"
+                ]
+            }
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

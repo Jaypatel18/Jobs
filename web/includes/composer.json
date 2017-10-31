@@ -1,0 +1,16 @@
+{
+    "require":
+    {
+      "phpclasses/oauth-api": ">=1.0.103"
+    },
+    "repositories":
+    [
+      {
+        "type": "composer",
+        "url": "https:\/\/www.phpclasses.org\/"
+      },
+      {
+        "packagist": false
+      }
+    ]
+}

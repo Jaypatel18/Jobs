@@ -23,10 +23,4 @@ include_once("header.php");
 #######################################
 #####           BODY              #####
 #######################################
-$result = query("SELECT * FROM users");
-
-if ($result->num_rows > 0) {
-    while($row = fetch($result)) {
-        echo $row['first_name'];
-    }
-}
+include_once("vendor/phpclasses/oauth-api/login_with_linkedin2.php");
