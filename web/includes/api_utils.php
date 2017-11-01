@@ -26,11 +26,12 @@ function request($url, $type = 'GET', $body = null, $headers = null, $return_bod
     //return the transfer as a string 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, $return_body); 
 
-    // $output contains the output string 
-    $output = curl_exec($ch); 
+    if(($output = curl_exec($ch)) === false)
+    {
+        echo 'Curl error: ' . curl_error($ch);
+        return -1;
+    }// end if there was an error executing cURL
 
-    echo curl_error ($ch);
-    
     // close curl resource to free up system resources 
     curl_close($ch);     
 

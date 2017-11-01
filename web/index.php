@@ -24,4 +24,5 @@ include_once("header.php");
 #######################################
 #####           BODY              #####
 #######################################
-include_once("vendor/phpclasses/oauth-api/login_with_linkedin2.php");
+?>
+<a href="includes/vendor/phpclasses/oauth-api/login_with_linkedin2.php">Sign in with Linkedin</a>
