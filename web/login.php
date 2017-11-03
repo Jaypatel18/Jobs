@@ -14,7 +14,12 @@ include("general_utils.php");
 include("api_utils.php");
 
 #######################################
-#####           INCLUDES          #####
+#####           DATABASE          #####
+#######################################
+db_connect('dbadmin@job-applier', 'auth');
+
+#######################################
+#####           HEADER            #####
 #######################################
 include_once('header.php');
 
@@ -47,7 +52,8 @@ if($access_token != null) {
 }// end if we generated a new access token
 
 $linkedin_fields = array('id', 'first-name', 'last-name', 'headline', 'location', 
-                         'industry', 'summary', 'specialties', 'positions', 'picture-url');
+                         'industry', 'summary', 'specialties', 'positions', 'picture-url', 'email-address',
+                         'public-profile-url');
 
 // GET request using the access token we just got
 // add the access token to the header of the GET request
@@ -57,32 +63,33 @@ $response = request($api_url, 'GET', null, $headers);
 $response = json_decode($response, true);
 
 if(get('status', $response) != '401'){
-?>
-<table class="table table-inverse">
-  <tbody>
-    <tr>
-      <td>First Name</td>
-      <td><?= $response['firstName'] ?></td>
-    </tr>
-    <tr>
-      <td>Last name</td>
-      <td><?= $response['lastName'] ?></td>
-    </tr>
-    <tr>
-      <td>Headline</td>
-      <td><?= $response['headline'] ?></td>
-    </tr>
-    <tr>
-      <td>Indsutry</td>
-      <td><?= $response['industry'] ?></td>
-    </tr>
-    <tr>
-      <td>Summary</td>
-      <td><?= $response['summary'] ?></td>
-    </tr>
-  </tbody>
-</table>
-<?php
+  $position = $response['positions']['values'][0];
+  $sql = "INSERT IGNORE INTO users SET 
+                              linkedin_id = '".escape($response['id'])."',
+                              first_name = '".escape($response['firstName'])."',
+                              last_name = '".escape($response['lastName'])."',
+                              email_address = '".escape($response['emailAddress'])."',
+                              summary = '".escape($response['summary'])."',
+                              headline = '".escape($response['headline'])."',
+                              country_code = '".escape($response['location']['country']['code'])."',
+                              location = '".escape($response['location']['name'])."',
+                              industry = '".escape($response['industry'])."',
+                              picture_url = '".escape($response['pictureUrl'])."',
+                              linkedin_profile_url = '".escape($response['publicProfileUrl'])."',
+                              position_id_1 = '".escape($position['id'])."',
+                              company_id_1 = '".escape($position['company']['id'])."',
+                              company_industry_1 = '".escape($position['company']['industry'])."',
+                              company_name_1 = '".escape($position['company']['name'])."',
+                              company_size_1 = '".escape($position['company']['size'])."',
+                              company_type_1 = '".escape($position['company']['type'])."',
+                              company_is_current_1 = '".escape($position['isCurrent'] ? 'Y' : 'N')."',
+                              company_location_1 = '".escape($position['location']['name'])."',
+                              company_start_1 = '".escape($position['startDate']['year'] . '-' . $position['startDate']['month'] . '-01')."',
+                              company_summary_1 = '".escape($position['summary'])."',
+                              company_title_1 = '".escape($position['title'])."'";
+  if(query($sql)){
+    echo "Successfully added user to database";
+  }// end if query success
 }else{
     var_dump($response);
 }// end if we don't have a 401 error

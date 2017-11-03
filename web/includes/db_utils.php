@@ -24,7 +24,12 @@ function query($sql, $conn = false)
         $conn = most_recent_connection();
     }// end if there has
 
-    return $conn->query($sql);
+    if(!($result = $conn->query($sql))){
+        echo "Error in mysql query: " . $sql;
+        return false;
+    }// end if error in query
+
+    return $result;
 }// end function db_query
 
 function fetch($result)
