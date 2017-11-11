@@ -46,12 +46,10 @@ function getCurrentTabUrl(callback) {
 }
 
 /**
- * Change the background color of the current page.
- *
- * @param {string} color The new background color.
+ * Edit information for a user's autofill form
  */
-function changeBackgroundColor(color) {
-  var script = 'document.body.style.backgroundColor="' + color + '";';
+function editInfo() {
+  var script = "console.log('Clicked the edit info button');";
   // See https://developer.chrome.com/extensions/tabs#method-executeScript.
   // chrome.tabs.executeScript allows us to programmatically inject JavaScript
   // into a page. Since we omit the optional first argument "tabId", the script
@@ -60,7 +58,22 @@ function changeBackgroundColor(color) {
   chrome.tabs.executeScript({
     code: script
   });
-}
+}// end function editInfo
+
+/**
+ * Autofill a form on the current page
+ */
+function autofill() {
+  var script = "console.log('Clicked the autofill button');";
+  // See https://developer.chrome.com/extensions/tabs#method-executeScript.
+  // chrome.tabs.executeScript allows us to programmatically inject JavaScript
+  // into a page. Since we omit the optional first argument "tabId", the script
+  // is inserted into the active tab of the current window, which serves as the
+  // default.
+  chrome.tabs.executeScript({
+    code: script
+  });
+}// end function editInfo
 
 /**
  * Gets the saved background color for url.
@@ -103,22 +116,11 @@ function saveBackgroundColor(url, color) {
 // user devices.
 document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url) => {
-    var dropdown = document.getElementById('dropdown');
-
-    // Load the saved background color for this page and modify the dropdown
-    // value, if needed.
-    getSavedBackgroundColor(url, (savedColor) => {
-      if (savedColor) {
-        changeBackgroundColor(savedColor);
-        dropdown.value = savedColor;
-      }
+    document.getElementById('edit_info').addEventListener('click', () => {
+      editInfo();
     });
-
-    // Ensure the background color is changed and saved when the dropdown
-    // selection changes.
-    dropdown.addEventListener('change', () => {
-      changeBackgroundColor(dropdown.value);
-      saveBackgroundColor(url, dropdown.value);
+    document.getElementById('autofill').addEventListener('click', () => {
+      autofill();
     });
   });
 });
